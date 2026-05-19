@@ -212,4 +212,5 @@ spec:
         - name: authelia
           port: 9091
 
-  tls: {}
+  tls:
+    secretName: wildcard-tls
