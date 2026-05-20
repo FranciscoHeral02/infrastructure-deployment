@@ -45,7 +45,7 @@ data:
       encryption_key: "${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
 
       postgres:
-        address: tcp://pgbouncer.databases.svc.cluster.local:6432
+        address: pgbouncer.databases.svc.cluster.local:6432
     
         database: authelia
     
