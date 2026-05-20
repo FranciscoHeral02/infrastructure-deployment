@@ -32,6 +32,31 @@ spec:
             - name: config
               mountPath: /config
 
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 9091
+
+            initialDelaySeconds: 15
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 9091
+
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
       volumes:
         - name: config
           projected:
