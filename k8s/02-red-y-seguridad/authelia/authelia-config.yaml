@@ -37,7 +37,7 @@ data:
       redis:
         host: redis.cache.svc.cluster.local
         port: 6379
-        password: "Miyatekelo123!"
+        password: "${REDIS_PASSWORD}"
 
     storage:
       encryption_key: "${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
