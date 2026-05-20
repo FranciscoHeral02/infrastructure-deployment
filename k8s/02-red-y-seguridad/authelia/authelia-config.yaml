@@ -14,9 +14,6 @@ data:
         enabled: true
     log:
       level: info
-    identity_validation:
-      reset_password:
-        jwt_secret: "${AUTHELIA_JWT_SECRET}"
     authentication_backend:
       file:
         path: /config/users_database.yml
