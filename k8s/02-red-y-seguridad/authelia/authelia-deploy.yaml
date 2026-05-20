@@ -3,65 +3,54 @@ kind: Deployment
 metadata:
   name: authelia
   namespace: security
-
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: authelia
-
   template:
     metadata:
       labels:
         app: authelia
-
     spec:
       containers:
         - name: authelia
-          image: authelia/authelia:latest
-
+          image: authelia/authelia:4.38
           ports:
             - containerPort: 9091
-
           envFrom:
             - secretRef:
                 name: security-secrets
-
           volumeMounts:
-            - name: config
-              mountPath: /config
-
+            - name: config-volume
+              mountPath: /config/configuration.yml
+              subPath: configuration.yml
+            - name: users-volume
+              mountPath: /config/users_database.yml
+              subPath: users_database.yml
           resources:
             requests:
               memory: "128Mi"
               cpu: "100m"
-
             limits:
               memory: "512Mi"
               cpu: "500m"
-
           livenessProbe:
             httpGet:
               path: /api/health
               port: 9091
-
             initialDelaySeconds: 15
             periodSeconds: 10
-
           readinessProbe:
             httpGet:
               path: /api/health
               port: 9091
-
             initialDelaySeconds: 5
             periodSeconds: 10
-
       volumes:
-        - name: config
-          projected:
-            sources:
-              - configMap:
-                  name: authelia-config
-              - configMap:
-                  name: authelia-users
+        - name: config-volume
+          configMap:
+            name: authelia-config
+        - name: users-volume
+          configMap:
+            name: authelia-users

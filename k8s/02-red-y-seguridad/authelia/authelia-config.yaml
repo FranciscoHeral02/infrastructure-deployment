@@ -28,10 +28,14 @@ data:
           policy: one_factor
 
     session:
-      name: authelia_session
-      domain: devfheral.dev
       secret: "${AUTHELIA_SESSION_SECRET}"
-
+      
+      cookies:
+        - domain: devfheral.dev
+          authelia_url: https://auth.devfheral.dev
+    
+          default_redirection_url: https://devfheral.dev
+          
       redis:
         host: redis.cache.svc.cluster.local
         port: 6379
@@ -41,7 +45,7 @@ data:
       encryption_key: "${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
 
       postgres:
-        address: tcp://pgbouncer.databases.svc.cluster.local:6432
+        address: pgbouncer.databases.svc.cluster.local:6432
     
         database: authelia
     
