@@ -37,7 +37,6 @@ data:
       redis:
         host: redis.cache.svc.cluster.local
         port: 6379
-        username: ""
         password: "${REDIS_PASSWORD}"
 
     storage:
