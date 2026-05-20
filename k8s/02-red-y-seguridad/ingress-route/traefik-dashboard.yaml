@@ -10,7 +10,7 @@ spec:
     - match: Host(`traefik.devfheral.dev`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
       kind: Rule
       services:
-        - name: api@internal
-          kind: TraefikService
+        - name: authelia
+          port: 9091
   tls:
     secretName: wildcard-tls
