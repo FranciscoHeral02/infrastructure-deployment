@@ -5,6 +5,8 @@ metadata:
   namespace: security
 
 spec:
+  type: ClusterIP
+  
   selector:
     app: authelia
 
