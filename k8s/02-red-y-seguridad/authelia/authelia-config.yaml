@@ -8,7 +8,10 @@ data:
   configuration.yml: |
     server:
       address: tcp://0.0.0.0:9091
-
+      
+    telemetry:
+      metrics:
+        enabled: true
     log:
       level: info
 
@@ -36,8 +39,16 @@ data:
 
     storage:
       encryption_key: "${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
-      local:
-        path: /config/db.sqlite3
+
+      postgres:
+        address: tcp://pgbouncer.databases.svc.cluster.local:6432
+    
+        database: authelia
+    
+        username: authelia_user
+        password: "${AUTHELIA_POSTGRES_PASSWORD}"
+    
+        schema: public
 
     notifier:
       filesystem:
