@@ -14,7 +14,9 @@ data:
         enabled: true
     log:
       level: info
-
+    identity_validation:
+      reset_password:
+        jwt_secret: "${AUTHELIA_JWT_SECRET}"
     authentication_backend:
       file:
         path: /config/users_database.yml
@@ -39,7 +41,7 @@ data:
       redis:
         host: redis.cache.svc.cluster.local
         port: 6379
-        password: "${REDIS_PASSWORD}"
+        password: "${AUTHELIA_REDIS_PASSWORD}"
 
     storage:
       encryption_key: "${AUTHELIA_STORAGE_ENCRYPTION_KEY}"
@@ -50,7 +52,7 @@ data:
         database: authelia
     
         username: authelia_user
-        password: "${AUTHELIA_POSTGRES_PASSWORD}"
+        password: "${AUTHELIA_STORAGE_POSTGRES_PASSWORD}"
     
         schema: public
 
