@@ -29,7 +29,7 @@ spec:
             - name: AUTHENTIK_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: authentik-secrets
+                  name: security-secrets
                   key: AUTHENTIK_SECRET_KEY
 
             - name: AUTHENTIK_HOST
@@ -44,7 +44,7 @@ spec:
             - name: AUTHENTIK_POSTGRESQL__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: authentik-secrets
+                  name: security-secrets
                   key: AUTHENTIK_POSTGRES_PASSWORD
 
             - name: AUTHENTIK_REDIS__HOST
