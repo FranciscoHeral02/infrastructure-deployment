@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik-worker
+  namespace: security
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik-worker
+  template:
+    metadata:
+      labels:
+        app: authentik-worker
+    spec:
+      containers:
+        - name: worker
+          image: ghcr.io/goauthentik/server:2026.2.3
+          args:
+            - worker
+
+          env:
+            - name: AUTHENTIK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: security-secrets
+                  key: AUTHENTIK_SECRET_KEY
+
+            - name: AUTHENTIK_HOST
+              value: https://auth.devfheral.dev
+
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              value: postgres-internal.databases.svc.cluster.local
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              value: authentik
+            - name: AUTHENTIK_POSTGRESQL__USER
+              value: authentik_user
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: security-secrets
+                  key: AUTHENTIK_POSTGRES_PASSWORD
