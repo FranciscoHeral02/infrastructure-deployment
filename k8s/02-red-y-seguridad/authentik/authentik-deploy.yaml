@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik
+  namespace: security
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: authentik
+
+  template:
+    metadata:
+      labels:
+        app: authentik
+
+    spec:
+      containers:
+        - name: authentik
+          image: ghcr.io/goauthentik/server:latest
+          args:
+            - server
+
+          ports:
+            - containerPort: 9000
+
+          env:
+            - name: AUTHENTIK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_SECRET_KEY
+
+            - name: AUTHENTIK_HOST
+              value: https://auth.devfheral.dev
+
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              value: postgres-internal.databases.svc.cluster.local
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              value: authentik
+            - name: AUTHENTIK_POSTGRESQL__USER
+              value: authentik_user
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_POSTGRES_PASSWORD
+
+            - name: AUTHENTIK_REDIS__HOST
+              value: redis.cache.svc.cluster.local
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /-/health/live/
+              port: 9000
+            initialDelaySeconds: 40
+            periodSeconds: 15
+
+          readinessProbe:
+            httpGet:
+              path: /-/health/ready/
+              port: 9000
+            initialDelaySeconds: 20
+            periodSeconds: 10
