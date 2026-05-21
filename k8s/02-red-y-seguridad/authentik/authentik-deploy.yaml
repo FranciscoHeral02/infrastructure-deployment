@@ -46,10 +46,7 @@ spec:
                 secretKeyRef:
                   name: security-secrets
                   key: AUTHENTIK_POSTGRES_PASSWORD
-
-            - name: AUTHENTIK_REDIS__HOST
-              value: redis.cache.svc.cluster.local
-
+                  
           resources:
             requests:
               cpu: "100m"
