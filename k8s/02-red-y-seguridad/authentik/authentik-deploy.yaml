@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authentik
+  template:
+    metadata:
+      labels:
+        app: authentik
+    spec:
+      containers:
+        - name: server
+          image: ghcr.io/goauthentik/server:latest
+          args:
+            - server
+          env:
+            - name: AUTHENTIK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secrets
+                  key: AUTHENTIK_SECRET_KEY
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              value: postgres-internal.databases.svc.cluster.local
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              value: authentik
+            - name: AUTHENTIK_POSTGRESQL__USER
+              value: authentik_user
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: POSTGRES_PASSWORD
+            - name: AUTHENTIK_REDIS__HOST
+              value: redis.cache.svc.cluster.local
+            - name: AUTHENTIK_REDIS__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets
+                  key: REDIS_PASSWORD
+            - name: AUTHENTIK_HOST
+              value: https://auth.devfheral.dev
+          ports:
+            - containerPort: 9000
+            - containerPort: 9443
