@@ -4,7 +4,7 @@ metadata:
   name: devfheral-public-cert
   namespace: kube-system
 spec:
-  secretName: wildcard-tls
+  secretName: devfheral-public-tls
   issuerRef:
     name: letsencrypt-cloudflare
     kind: ClusterIssuer
