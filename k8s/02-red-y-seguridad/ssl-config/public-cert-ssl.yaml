@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: wildcard-cert
+  name: devheral-public-cert
   namespace: kube-system
 spec:
   secretName: wildcard-tls
@@ -10,5 +10,4 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "devfheral.dev"
-    - "*.devfheral.dev" 
-    - "*.internal.devfheral.dev"
+    - "*.devfheral.dev"
