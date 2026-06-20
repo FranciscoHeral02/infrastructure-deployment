@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: devheral-public-cert
+  name: devfheral-public-cert
   namespace: kube-system
 spec:
   secretName: wildcard-tls
