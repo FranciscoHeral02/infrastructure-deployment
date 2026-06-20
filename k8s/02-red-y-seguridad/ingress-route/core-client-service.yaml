@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`dev.devfheral.dev`) && PathPrefix(`/api/v1/customers`)
+    - match: Host(`appsdev.devfheral.dev`) && PathPrefix(`/api/v1/customers`)
       kind: Rule
       middlewares:
         - name: authentik-forwardauth
