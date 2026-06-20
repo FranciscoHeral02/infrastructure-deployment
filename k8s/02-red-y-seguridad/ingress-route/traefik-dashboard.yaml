@@ -14,4 +14,5 @@ spec:
       services:
         - name: api@internal
           kind: TraefikService
-  tls: {}
+  tls:
+    secret-name: devfheral-internal-cert
