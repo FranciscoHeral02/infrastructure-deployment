@@ -9,5 +9,6 @@ spec:
     name: letsencrypt-cloudflare
     kind: ClusterIssuer
   dnsNames:
-    - "*.devfheral.dev"
     - "devfheral.dev"
+    - "*.devfheral.dev" 
+    - "*.internal.devfheral.dev"
