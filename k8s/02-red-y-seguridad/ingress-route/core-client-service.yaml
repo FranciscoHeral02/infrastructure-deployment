@@ -10,8 +10,8 @@ spec:
     - match: Host(`appsdev.devfheral.dev`) && PathPrefix(`/api/v1/customers`)
       kind: Rule
       middlewares:
-        - name: authentik-forwardauth
-          namespace: kube-system
+        - name: apps-forwardauth
+          namespace: apps
       services:
         - name: core-client-service
           port: 8080
